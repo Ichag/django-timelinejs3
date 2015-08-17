@@ -1,0 +1,1 @@
+### All routes are defined in main project. use your own routes to view methods

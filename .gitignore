@@ -1,0 +1,11 @@
+localsettings.py
+*.pyc
+.idea/
+.secret
+.project
+.pydevproject
+db.sqlite3
+*.egg-info
+*.log
+*.pot
+*/static/bower_components/*
