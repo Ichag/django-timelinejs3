@@ -1,6 +1,10 @@
 # django-timelinejs3
 
-## currently in alpha state because it was developed on friday midnight...
+## a django app for http://timeline3.knightlab.com/
+
+### currently in alpha state because it was developed on friday midnight...
+
+
 
 * clone it
 * set up your localsettings.py, rename .template and fill
