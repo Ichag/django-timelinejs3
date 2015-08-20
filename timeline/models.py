@@ -10,22 +10,17 @@ class Text(models.Model):
     text = models.TextField(verbose_name=_('text'), blank=True)
     slug = models.SlugField(verbose_name=_('slug'), default="")
 
-    def to_dict(self):
-        return serializers.serialize("json", [self])
-
     def __str__(self):
         return self.slug
 
 
 class Media(models.Model):
+    title = models.CharField(verbose_name=_('title'), max_length=255, default="")
     url = models.URLField(verbose_name=_('url'), null=True, default="")
     caption = models.TextField(verbose_name=_('caption'), blank=True, null=True, default="")
     credit = models.TextField(verbose_name=_('credit'), blank=True, null=True, default="")
     thumbnail = models.URLField(verbose_name=_('thumbnail'), null=True, blank=True, default="")
     slug = models.SlugField(verbose_name=_('slug'), default="")
-
-    def to_dict(self):
-        return serializers.serialize("json", [self])
 
     def __str__(self):
         return self.slug
