@@ -22,15 +22,12 @@
     </div>
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="{% static 'js/timeline.js' %}"></script>
 <script src="{% static 'js/plugins.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
-
-
 <script>
     $(document).ready(function () {
         var embed = document.getElementById('timeline-embed');
@@ -39,6 +36,38 @@
         window.addEventListener('resize', function () {
             var embed = document.getElementById('timeline-embed');
             embed.style.height = getComputedStyle(document.body).height;
+            timeline.options = {
+                script_path: "{{ options.script_path }}",
+                timenav_position: {{ options.timenav_position }},
+                height:                     this._el.container.offsetHeight || {{ options.height }},
+                width:                      this._el.container.offsetWidth || {{ options.width }},
+                scale_factor: {{ options.scale_factor }},              // How many screen widths wide should the timeline be
+                layout: "{{ options.layout }}",    // portrait or landscape
+                optimal_tick_width: {{ options.optimal_tick_width }},            // optimal distance (in pixels) between ticks on axis
+                base_class:                 "{{ options.base_class }}",
+                timenav_height: {{ options.timenav_height }},
+                timenav_height_percentage: {{ options.timenav_height_percentage }},             // Overrides timenav height as a percentage of the screen
+                timenav_height_min: {{ options.timenav_height_min }},            // Minimum timenav height
+                marker_height_min: {{ options.marker_height_min }},             // Minimum Marker Height
+                marker_width_min: {{ options.marker_width_min }},            // Minimum Marker Width
+                marker_padding: {{ options.marker_padding }},              // Top Bottom Marker Padding
+                start_at_slide: {{ options.start_at_slide }},
+                menubar_height: {{ options.menubar_height }},
+                skinny_size: {{ options.skinny_size }},
+                relative_date: {{ options.relative_date }},          // Use momentjs to show a relative date from the slide.text.date.created_time field
+                use_bc: {{ options.use_bc }},          // Use declared suffix on dates earlier than 0
+                // animation
+                duration: {{ options.duration }},
+                ease:                       VCO.Ease.easeInOutQuint,
+                // interaction
+                dragging: {{ options.dragging }},
+                trackResize: {{ options.trackResize }},
+                map_type: "{{ options.map_type }}",
+                slide_padding_lr: {{ options.slide_padding_lr }},            // padding on slide of slide
+                slide_default_fade: "{{ options.slide_default_fade }}%",           // landscape fade
+                api_key_flickr: "{{ options.api_key_flickr }}",             // Flickr API Key
+                language: "{{ options.language }}"
+            };
             timeline.updateDisplay();
         });
         timeline.updateDisplay();
