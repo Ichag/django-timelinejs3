@@ -9,10 +9,15 @@ from django.shortcuts import get_object_or_404
 from .models import Timeline, Options
 
 
-def index_data(request):
+def index_data(request, timeline_id):
     """Gets the last create timeline object and renders json for returning to template.
     timelinejs3 expects a json file, not able to read directly from json string"""
-    obj = Timeline.objects.latest('id')
+    if(timeline_id == 'latest'):
+        obj = Timeline.objects.latest('id')
+    else:
+        obj = get_object_or_404(Timeline, pk=timeline_id)
+
+
     data = {
         "title": {
             "media": {
