@@ -6,7 +6,7 @@ from django.core import serializers
 from django.shortcuts import get_object_or_404
 
 
-from .models import Timeline
+from .models import Timeline, Options
 
 
 def index_data(request):
@@ -70,5 +70,6 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['new'] = Timeline.objects.all()
+        context['timeline'] = Timeline.objects.all()
+        context['options'] = Options.objects.latest('id')
         return context

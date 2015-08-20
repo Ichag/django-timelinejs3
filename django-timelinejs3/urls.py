@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     # name = app_(model)_action
     url(r'^timeline/$', timeline_views.IndexView.as_view(), name='timeline_index'),
+
     url(r'^timeline/data/$', timeline_views.index_data, name='timeline_index_data'),
 ]

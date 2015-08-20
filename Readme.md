@@ -1,9 +1,9 @@
 # django-timelinejs3
 
-## currently in pre-alpha state because it was develop on friday midnight...
+## currently in alpha state because it was developed on friday midnight...
 
 * clone it
-* set your localsettings.py, rename .template and fill
+* set up your localsettings.py, rename .template and fill
 * migrate with ```python manage.py migrate```
 * add a url like
 ```
@@ -14,6 +14,6 @@ and add events in django admin
 
 
 ## Todo
-* make settings configurable via django admin
+* make settings configurable via django admin <-- Done, options are now settable via django admin
 * add forms for adding new events via frontend
 * use timeline primary key to rende multiple timelines (on one page or seperated)
