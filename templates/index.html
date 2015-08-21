@@ -16,7 +16,7 @@
                 embed.style.height = getComputedStyle(document.body).height;
                 timeline.options = {
                     script_path: "{{ options.script_path }}",
-                    timenav_position: {{ options.timenav_position }},
+                    timenav_position: "{{ options.timenav_position }}",
                     height:                     this._el.container.offsetHeight || {{ options.height }},
                     width:                      this._el.container.offsetWidth || {{ options.width }},
                     scale_factor: {{ options.scale_factor }},              // How many screen widths wide should the timeline be
