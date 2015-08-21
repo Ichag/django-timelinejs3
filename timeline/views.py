@@ -27,7 +27,7 @@ def index_data(request, timeline_id):
                 "thumb": ""
             },
             "text": {
-                "headline": obj.text and obj.text.timeline or "",
+                "headline": obj.text and obj.text.headline or "",
                 "text": obj.text and obj.text.text or ""
             }
         },
