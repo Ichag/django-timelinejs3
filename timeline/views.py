@@ -16,8 +16,6 @@ def index_data(request, timeline_id):
         obj = Timeline.objects.latest('id')
     else:
         obj = get_object_or_404(Timeline, pk=timeline_id)
-
-
     data = {
         "title": {
             "media": {
