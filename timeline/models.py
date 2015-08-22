@@ -35,7 +35,7 @@ class BaseTimeline(models.Model):
 
 
 class Event(BaseTimeline):
-    title = models.CharField(verbose_name='internal Title', max_length=255, default="")
+    title = models.CharField(verbose_name='Title', max_length=255, default="")
     start_date = models.DateTimeField(verbose_name=_('start_date'))
     end_date = models.DateTimeField(verbose_name=_('end_date'))
     timeline = models.ForeignKey(to='timeline.Timeline')

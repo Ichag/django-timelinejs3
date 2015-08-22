@@ -71,12 +71,6 @@ class TimelineDetail(DetailView):
 
     model = Timeline
 
-    def get_context_data(self, **kwargs):
-        context = super(TimelineDetail, self).get_context_data(**kwargs)
-        if Timeline.options_preset:
-            context['options_preset'] = Timeline.options_preset
-        return context
-
 
 class IndexView(ListView):
     template_name = 'index.html'
