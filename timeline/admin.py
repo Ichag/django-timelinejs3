@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 
+
 # Register your models here.
 
 
@@ -15,7 +16,37 @@ class MediaAdmin(admin.ModelAdmin):
 
 
 class TimelineAdmin(admin.ModelAdmin):
-    fieldsets = [(None, {'fields': ['title', 'slug', 'text', 'media', 'published', 'options']})]
+    fieldsets = [(None, {'fields': ['title', 'slug', 'text', 'media', 'published']}),
+                 ('Options', {'fields': [
+                     'script_path',
+                     'height',
+                     'width',
+                     'scale_factor',
+                     'layout',
+                     'timenav_postion',
+                     'optimal_tick_width',
+                     'base_class',
+                     'timenav_height',
+                     'timenav_height_percentage',
+                     'timenav_height_min',
+                     'marker_height_min',
+                     'marker_width_min',
+                     'marker_padding',
+                     'start_at_slide',
+                     'menubar_height',
+                     'skinny_size',
+                     'relative_date',
+                     'use_bc',
+                     'duration',
+                     'dragging',
+                     'trackResize',
+                     'map_type',
+                     'slide_padding_lr',
+                     'slide_default_fade',
+                     'api_key_flickr',
+                     'language',
+                 ]})
+                 ]
     prepopulated_fields = {'slug': ('title',)}
 
 
@@ -30,4 +61,3 @@ admin.site.register(Timeline, TimelineAdmin)
 admin.site.register(Media, MediaAdmin)
 admin.site.register(Text, TextAdmin)
 admin.site.register(Event, EventAdmin)
-admin.site.register(Options)

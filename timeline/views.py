@@ -1,8 +1,7 @@
 import json
+from django.views.generic import DetailView, ListView
 
-from django.views.generic.base import TemplateView
-from django.http import HttpResponse, JsonResponse
-from django.core import serializers
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 
@@ -12,7 +11,7 @@ from .models import Timeline, Options
 def index_data(request, timeline_id):
     """Gets the last create timeline object and renders json for returning to template.
     timelinejs3 expects a json file, not able to read directly from json string"""
-    if(timeline_id == 'latest'):
+    if timeline_id == 'latest':
         obj = Timeline.objects.latest('id')
     else:
         obj = get_object_or_404(Timeline, pk=timeline_id)
@@ -68,11 +67,20 @@ def index_data(request, timeline_id):
     return JsonResponse(data)
 
 
-class IndexView(TemplateView):
-    template_name = 'index.html'
+class TimelineDetail(DetailView):
+
+    model = Timeline
 
     def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context['timeline'] = Timeline.objects.all()
-        context['options'] = Options.objects.latest('id')
+        context = super(TimelineDetail, self).get_context_data(**kwargs)
+        context['timeline'] = Timeline.objects.latest('id')
         return context
+
+
+class IndexView(ListView):
+    template_name = 'index.html'
+    model = Timeline
+    context_object_name = "timeline_list"
+
+    def get_queryset(self):
+        return Timeline.objects.all()
