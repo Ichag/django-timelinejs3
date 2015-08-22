@@ -45,30 +45,26 @@ class Event(BaseTimeline):
         return str(self.slug)
 
 
-class Timeline(BaseTimeline):
-    title = models.CharField(max_length=255)
-    published = models.BooleanField(default=False, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+class OptionsPreset(models.Model):
+    preset_title = models.CharField(max_length=255, default="")
 
-    #Options for Timeline
     script_path = models.CharField(max_length=255, blank=True, default="")
     height = models.IntegerField(blank=True, default=0)
     width = models.IntegerField(blank=True, default=0)
     scale_factor = models.IntegerField(blank=True, null=True, default=3)
-    layout = models.CharField(max_length=255,  blank=True, default="landscape")
+    layout = models.CharField(max_length=255, blank=True, default="landscape")
 
     TOP = "top"
     BOTTOM = "bottom"
     TIMENAV_POSTITION_CHOISES = (
         (TOP, 'Top'),
         (BOTTOM, 'Bottom')
-        )
+    )
     timenav_position = models.CharField(max_length=6,
                                         choices=TIMENAV_POSTITION_CHOISES,
-                                        default=BOTTOM,  blank=True)
+                                        default=BOTTOM, blank=True)
     optimal_tick_width = models.IntegerField(blank=True, null=True, default=100)
-    base_class = models.CharField(max_length=255,  blank=True, default="")
+    base_class = models.CharField(max_length=255, blank=True, default="")
     timenav_height = models.IntegerField(blank=True, null=True, default=150)
     timenav_height_percentage = models.IntegerField(blank=True, null=True, default=25)
     timenav_height_min = models.IntegerField(blank=True, null=True, default=150)
@@ -87,15 +83,22 @@ class Timeline(BaseTimeline):
     map_type = models.CharField(max_length=255, blank=True, default="stamen:toner-lite")
     slide_padding_lr = models.IntegerField(blank=True, null=True, default=100)
     slide_default_fade = models.IntegerField(blank=True, null=True, default=0)
+    api_key_flickr = models.CharField(max_length=255, blank=True, default="")
+    language = models.CharField(max_length=255, blank=True, default="en")
 
-    api_key_flickr = models.CharField(max_length=255,  blank=True, default="")
-    language = models.CharField(max_length=255,  blank=True, default="en")
+    def __str__(self):
+        return self.preset_title
 
+
+class Timeline(BaseTimeline):
+    title = models.CharField(max_length=255)
+    published = models.BooleanField(default=False, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
     slug = models.SlugField(verbose_name=_('slug'), default="")
+
+    options_preset = models.ForeignKey(to="timeline.OptionsPreset", verbose_name=_("the related option set"),
+                                       blank=True, null=True)
 
     def __str__(self):
         return self.title
-
-
-class Options(models.Model):
-    pass

@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 
-from .models import Timeline, Options
+from .models import Timeline, OptionsPreset
 
 
 def index_data(request, timeline_id):
@@ -73,7 +73,8 @@ class TimelineDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(TimelineDetail, self).get_context_data(**kwargs)
-        context['timeline'] = Timeline.objects.latest('id')
+        if Timeline.options_preset:
+            context['options_preset'] = Timeline.options_preset
         return context
 
 

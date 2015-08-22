@@ -14,38 +14,42 @@
             window.addEventListener('resize', function () {
                 var embed = document.getElementById('timeline-embed');
                 embed.style.height = getComputedStyle(document.body).height;
-                timeline.options = {
-                    script_path: "{{ timeline.script_path }}",
-                    timenav_position: "{{ timeline.timenav_position }}",
-                    height:                     this._el.container.offsetHeight || {{ timeline.height }},
-                    width:                      this._el.container.offsetWidth || {{ timeline.width }},
-                    scale_factor: {{ timeline.scale_factor }},              // How many screen widths wide should the timeline be
-                    layout: "{{ timeline.layout }}",    // portrait or landscape
-                    optimal_tick_width: {{ timeline.optimal_tick_width }},            // optimal distance (in pixels) between ticks on axis
-                    base_class:                 "{{ timeline.base_class }}",
-                    timenav_height: {{ timeline.timenav_height }},
-                    timenav_height_percentage: {{ timeline.timenav_height_percentage }},             // Overrides timenav height as a percentage of the screen
-                    timenav_height_min: {{ timeline.timenav_height_min }},            // Minimum timenav height
-                    marker_height_min: {{ timeline.marker_height_min }},             // Minimum Marker Height
-                    marker_width_min: {{ timeline.marker_width_min }},            // Minimum Marker Width
-                    marker_padding: {{ timeline.marker_padding }},              // Top Bottom Marker Padding
-                    start_at_slide: {{ timeline.start_at_slide }},
-                    menubar_height: {{ timeline.menubar_height }},
-                    skinny_size: {{ timeline.skinny_size }},
-                    relative_date: {{ timeline.relative_date }},          // Use momentjs to show a relative date from the slide.text.date.created_time field
-                    use_bc: {{ timeline.use_bc }},          // Use declared suffix on dates earlier than 0
-                    // animation
-                    duration: {{ timeline.duration }},
-                    ease:                       VCO.Ease.easeInOutQuint,
-                    // interaction
-                    dragging: {{ timeline.dragging }},
-                    trackResize: {{ timeline.trackResize }},
-                    map_type: "{{ timeline.map_type }}",
-                    slide_padding_lr: {{ timeline.slide_padding_lr }},            // padding on slide of slide
-                    slide_default_fade: "{{ timeline.slide_default_fade }}%",           // landscape fade
-                    api_key_flickr: "{{ timeline.api_key_flickr }}",             // Flickr API Key
-                    language: "{{ timeline.language }}"
-                };
+                {% if timeline.options_preset %}
+                    timeline.options = {
+                        script_path: "{{ timeline.options_preset.script_path }}",
+                        timenav_position: "{{ timeline.options_preset.timenav_position }}",
+                        height:                     this._el.container.offsetHeight || {{ timeline.options_preset.height }},
+                        width:                      this._el.container.offsetWidth || {{ timeline.options_preset.width }},
+                        scale_factor: {{ timeline.options_preset.scale_factor }},              // How many screen widths wide should the timeline be
+                        layout: "{{ timeline.options_preset.layout }}",    // portrait or landscape
+                        optimal_tick_width: {{ timeline.options_preset.optimal_tick_width }},            // optimal distance (in pixels) between ticks on axis
+                        base_class:                 "{{ timeline.options_preset.base_class }}",
+                        timenav_height: {{ timeline.options_preset.timenav_height }},
+                        timenav_height_percentage: {{ timeline.options_preset.timenav_height_percentage }},             // Overrides timenav height as a percentage of the screen
+                        timenav_height_min: {{ timeline.options_preset.timenav_height_min }},            // Minimum timenav height
+                        marker_height_min: {{ timeline.options_preset.marker_height_min }},             // Minimum Marker Height
+                        marker_width_min: {{ timeline.options_preset.marker_width_min }},            // Minimum Marker Width
+                        marker_padding: {{ timeline.options_preset.marker_padding }},              // Top Bottom Marker Padding
+                        start_at_slide: {{ timeline.options_preset.start_at_slide }},
+                        menubar_height: {{ timeline.options_preset.menubar_height }},
+                        skinny_size: {{ timeline.options_preset.skinny_size }},
+                        relative_date: {{ timeline.options_preset.relative_date }},          // Use momentjs to show a relative date from the slide.text.date.created_time field
+                        use_bc: {{ timeline.options_preset.use_bc }},          // Use declared suffix on dates earlier than 0
+                        // animation
+                        duration: {{ timeline.options_preset.duration }},
+                        ease:                       VCO.Ease.easeInOutQuint,
+                        // interaction
+                        dragging: {{ timeline.options_preset.dragging }},
+                        trackResize: {{ timeline.options_preset.trackResize }},
+                        map_type: "{{ timeline.options_preset.map_type }}",
+                        slide_padding_lr: {{ timeline.options_preset.slide_padding_lr }},            // padding on slide of slide
+                        slide_default_fade: "{{ timeline.options_preset.slide_default_fade }}%",           // landscape fade
+                        api_key_flickr: "{{ timeline.options_preset.api_key_flickr }}",             // Flickr API Key
+                        language: "{{ timeline.options_preset.language }}"
+                    };
+                    {% else %}
+                        timeline.options = {};
+                {% endif %}
                 timeline.updateDisplay();
             });
             timeline.updateDisplay();
