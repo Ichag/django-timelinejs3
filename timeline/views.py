@@ -11,7 +11,7 @@ from .models import Timeline, Options
 def index_data(request, timeline_id):
     """Gets the last create timeline object and renders json for returning to template.
     timelinejs3 expects a json file, not able to read directly from json string"""
-    if(timeline_id == 'latest'):
+    if timeline_id == 'latest':
         obj = Timeline.objects.latest('id')
     else:
         obj = get_object_or_404(Timeline, pk=timeline_id)
