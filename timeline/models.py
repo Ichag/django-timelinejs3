@@ -52,8 +52,14 @@ class OptionsPreset(models.Model):
     height = models.IntegerField(blank=True, default=0)
     width = models.IntegerField(blank=True, default=0)
     scale_factor = models.IntegerField(blank=True, null=True, default=3)
-    layout = models.CharField(max_length=255, blank=True, default="landscape")
-
+    LANDSCAPE = "landscape"
+    PORTRAIT = "portrait"
+    LAYOUT_CHOISES = (
+        (LANDSCAPE, 'Landscape'),
+        (PORTRAIT, 'Portrait')
+    )
+    layout = models.CharField(max_length=9, choices=LAYOUT_CHOISES,
+                              blank=True, default=LANDSCAPE)
     TOP = "top"
     BOTTOM = "bottom"
     TIMENAV_POSTITION_CHOISES = (
