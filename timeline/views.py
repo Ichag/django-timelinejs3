@@ -75,7 +75,6 @@ class TimelineDetail(DetailView):
 class IndexView(ListView):
     template_name = 'index.html'
     model = Timeline
-    context_object_name = "timeline_list"
 
     def get_queryset(self):
         return Timeline.objects.all()
