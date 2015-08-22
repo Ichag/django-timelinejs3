@@ -50,19 +50,9 @@ class Timeline(BaseTimeline):
     published = models.BooleanField(default=False, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    options = models.ForeignKey(to='timeline.Options', blank=True, null=True)
 
-    slug = models.SlugField(verbose_name=_('slug'), default="")
-
-    def __str__(self):
-        return self.title
-
-
-class Options(models.Model):
-    preset_title = models.CharField(max_length=255, default="")
-
+    #Options for Timeline
     script_path = models.CharField(max_length=255, blank=True, default="")
-
     height = models.IntegerField(blank=True, default=0)
     width = models.IntegerField(blank=True, default=0)
     scale_factor = models.IntegerField(blank=True, null=True, default=3)
@@ -101,5 +91,11 @@ class Options(models.Model):
     api_key_flickr = models.CharField(max_length=255,  blank=True, default="")
     language = models.CharField(max_length=255,  blank=True, default="en")
 
+    slug = models.SlugField(verbose_name=_('slug'), default="")
+
     def __str__(self):
-        return self.preset_title
+        return self.title
+
+
+class Options(models.Model):
+    pass
