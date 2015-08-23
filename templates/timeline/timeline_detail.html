@@ -2,24 +2,22 @@
 {% load static %}
 
 {% block content %}
-    <div id="timeline-embed">
-        <div id="timeline"></div>
-    </div>
+    <div id="{{ timeline.options_preset.css_id }}"></div>
     <script src="{% static 'js/timeline.js' %}"></script>
     <script>
         $(document).ready(function () {
-            var embed = document.getElementById('timeline-embed');
+            var embed = document.getElementById('{{ timeline.options_preset.css_id }}');
             embed.style.height = getComputedStyle(document.body).height;
-            var timeline = new VCO.Timeline('timeline-embed', '{% url 'timeline_index_data_latest' %}', {});
+            var timeline = new VCO.Timeline('{{ timeline.options_preset.css_id }}', "{% url 'timeline_detail_data' timeline_id=object.id %}", {});
             window.addEventListener('resize', function () {
-                var embed = document.getElementById('timeline-embed');
+                var embed = document.getElementById('{{ timeline.options_preset.css_id }}');
                 embed.style.height = getComputedStyle(document.body).height;
                 {% if timeline.options_preset %}
                     timeline.options = {
                         script_path: "{{ timeline.options_preset.script_path }}",
                         timenav_position: "{{ timeline.options_preset.timenav_position }}",
-                        height:                     this._el.container.offsetHeight || {{ timeline.options_preset.height }},
-                        width:                      this._el.container.offsetWidth || {{ timeline.options_preset.width }},
+                        height: {% if timeline.options_preset.height > 0 %}{{ timeline.options_preset.height }}{% else %}this._el.container.offsetHeight{% endif %},
+                        width: {% if timeline.options_preset.width > 0 %}{{ timeline.options_preset.width }}{% else %}this._el.container.offsetWidth{% endif %},
                         scale_factor: {{ timeline.options_preset.scale_factor }},              // How many screen widths wide should the timeline be
                         layout: "{{ timeline.options_preset.layout }}",    // portrait or landscape
                         optimal_tick_width: {{ timeline.options_preset.optimal_tick_width }},            // optimal distance (in pixels) between ticks on axis
@@ -37,7 +35,7 @@
                         use_bc: {{ timeline.options_preset.use_bc }},          // Use declared suffix on dates earlier than 0
                         // animation
                         duration: {{ timeline.options_preset.duration }},
-                        ease:                       VCO.Ease.easeInOutQuint,
+                        ease:                       VCO.Ease.{{ timeline.options_preset.ease }},
                         // interaction
                         dragging: {{ timeline.options_preset.dragging }},
                         trackResize: {{ timeline.options_preset.trackResize }},

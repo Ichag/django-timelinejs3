@@ -1,14 +1,15 @@
-import json
-from django.views.generic import DetailView, ListView
+from django.contrib import messages
 
-from django.http import JsonResponse
+from django.views.generic import DetailView, ListView, UpdateView
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
+
+from .models import *
 
 
-from .models import Timeline, OptionsPreset
-
-
-def index_data(request, timeline_id):
+def detail_data(request, timeline_id):
     """Gets the last create timeline object and renders json for returning to template.
     timelinejs3 expects a json file, not able to read directly from json string"""
     if timeline_id == 'latest':
@@ -78,3 +79,53 @@ class IndexView(ListView):
 
     def get_queryset(self):
         return Timeline.objects.all()
+
+
+class TimelineUpdate(UpdateView):
+
+    model = Timeline
+    fields = ('__all__')
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse('timeline_update_timeline', args=(self.object.pk,))
+
+
+class TextUpdate(UpdateView):
+
+    model = Text
+    fields = ('__all__')
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse('timeline_update_text', args=(self.object.pk,))
+
+
+class MediaUpdate(UpdateView):
+
+    model = Media
+    fields = ('__all__')
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse('timeline_update_media', args=(self.object.pk,))
+
+
+class EventUpdate(UpdateView):
+
+    model = Event
+    fields = ('__all__')
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse('timeline_update_event', args=(self.object.pk,))
+
+
+class OptionsPresetUpdate(UpdateView):
+
+    model = OptionsPreset
+    fields = ('__all__')
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse('timeline_update_optionspreset', args=(self.object.pk,))

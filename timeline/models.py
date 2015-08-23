@@ -1,5 +1,4 @@
 from django.db import models
-from django.core import serializers
 
 # important for translation
 from django.utils.translation import ugettext_lazy as _
@@ -46,19 +45,19 @@ class Event(BaseTimeline):
 
 
 class OptionsPreset(models.Model):
-    preset_title = models.CharField(max_length=255, default="")
-
-    script_path = models.CharField(max_length=255, blank=True, default="")
-    height = models.IntegerField(blank=True, default=0)
-    width = models.IntegerField(blank=True, default=0)
-    scale_factor = models.IntegerField(blank=True, null=True, default=3)
+    preset_title = models.CharField(verbose_name=_("Preset Title"), max_length=255, default="")
+    css_id = models.CharField(verbose_name=_("CSS ID for HTML Container"), max_length=255, default="timeline-embed")
+    script_path = models.CharField(verbose_name=_("Path to TimelineJs Javascript File"), max_length=255, blank=True, default="")
+    height = models.IntegerField(verbose_name=_("Container Height"), blank=True, default=0)
+    width = models.IntegerField(verbose_name=_("Container Width"), blank=True, default=0)
+    scale_factor = models.IntegerField(verbose_name=_("Scale factor"), help_text=_("How many screen widths wide should the timeline be"), blank=True, null=True, default=3)
     LANDSCAPE = "landscape"
     PORTRAIT = "portrait"
     LAYOUT_CHOISES = (
         (LANDSCAPE, 'Landscape'),
         (PORTRAIT, 'Portrait')
     )
-    layout = models.CharField(max_length=9, choices=LAYOUT_CHOISES,
+    layout = models.CharField(verbose_name=_("Orientation"), max_length=9, choices=LAYOUT_CHOISES,
                               blank=True, default=LANDSCAPE)
     TOP = "top"
     BOTTOM = "bottom"
@@ -66,7 +65,7 @@ class OptionsPreset(models.Model):
         (TOP, 'Top'),
         (BOTTOM, 'Bottom')
     )
-    timenav_position = models.CharField(max_length=6,
+    timenav_position = models.CharField(verbose_name=_("Position of the Navigation"), max_length=6,
                                         choices=TIMENAV_POSTITION_CHOISES,
                                         default=BOTTOM, blank=True)
     optimal_tick_width = models.IntegerField(blank=True, null=True, default=100)
@@ -84,6 +83,31 @@ class OptionsPreset(models.Model):
     use_bc = models.BooleanField(blank=True, default=False)
     duration = models.IntegerField(blank=True, null=True, default=1000)
     # ease:                       VCO.Ease.easeInOutQuint,
+    EASEINQUAD = "easeInQuad"
+    EASEOUTQUAD = "easeOutQuad"
+    EASEINOUTQUAD = "easeInOutQuad"
+    EASEINCUBIC = "easeInCubic"
+    EASEOUTCUBIC = "easeOutCubic"
+    EASEINOUTCUBIC = "easeInOutCubic"
+    EASEINQUART = "easeInQuart"
+    EASEOUTQUART = "easeOutQuart"
+    EASEINQUINT = "easeInQuint"
+    EASEOUTQUINT = "easeOutQuint"
+    EASEINOUTQUINT = "easeInOutQuint"
+    EASE_CHOISES = (
+        (EASEINQUAD, "easeInQuad"),
+        (EASEOUTQUAD, "easeOutQuad"),
+        (EASEINOUTQUAD, "easeInOutQuad"),
+        (EASEINCUBIC, "easeInCubic"),
+        (EASEOUTCUBIC, "easeOutCubic"),
+        (EASEINOUTCUBIC, "easeInOutCubic"),
+        (EASEINQUART, "easeInQuart"),
+        (EASEOUTQUART, "easeOutQuart"),
+        (EASEINQUINT, "easeInQuint"),
+        (EASEOUTQUINT, "easeOutQuint"),
+        (EASEINOUTQUINT, "easeInOutQuint"),
+    )
+    ease = models.CharField(max_length=255, choices=EASE_CHOISES, default=EASEINOUTQUINT)
     dragging = models.BooleanField(blank=True, default=True)
     trackResize = models.BooleanField(blank=True, default=True)
     map_type = models.CharField(max_length=255, blank=True, default="stamen:toner-lite")

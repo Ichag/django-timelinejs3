@@ -30,6 +30,7 @@ class EventAdmin(admin.ModelAdmin):
 class OptionsPresetAdmin(admin.ModelAdmin):
     fieldsets = [('Options', {'fields': [
         'preset_title',
+        'css_id',
         'script_path',
         'height',
         'width',
@@ -50,6 +51,7 @@ class OptionsPresetAdmin(admin.ModelAdmin):
         'relative_date',
         'use_bc',
         'duration',
+        'ease',
         'dragging',
         'trackResize',
         'map_type',
