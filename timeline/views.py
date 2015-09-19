@@ -1,6 +1,6 @@
 from django.contrib import messages
 
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import DetailView, ListView, UpdateView, CreateView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.core.urlresolvers import reverse
@@ -84,7 +84,7 @@ class IndexView(ListView):
 class TimelineUpdate(UpdateView):
 
     model = Timeline
-    fields = ('__all__')
+    fields = '__all__'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
@@ -94,27 +94,50 @@ class TimelineUpdate(UpdateView):
 class TextUpdate(UpdateView):
 
     model = Text
-    fields = ('__all__')
+    fields = '__all__'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse('timeline_update_text', args=(self.object.pk,))
 
 
-class MediaUpdate(UpdateView):
-
+class TimelineMediaDetail(DetailView):
     model = Media
-    fields = ('__all__')
+
+
+class TimelineMediaUpdate(UpdateView):
+    model = Media
+    fields = '__all__'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
-        return reverse('timeline_update_media', args=(self.object.pk,))
+        return reverse('timeline_update_media', args=(self.object.timeline.pk,))
+
+
+class TimelineMediaCreateView(CreateView):
+    model = Media
+    fields = ('', '', )  # all without timeline
+
+    def dispatch(self, request, *args, **kwargs):
+        self.timeline = get_object_or_404(Timeline, pk=kwargs['pk'])
+        return super(TimelineMediaCreateView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.timeline = self.timeline
+        return super(TimelineMediaCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('timeline_timeline_detail', args=(self.object.timeline.pk,))
+
+    def get_context_data(self, **kwargs):
+        kwargs['timeline'] = self.timeline
+        return super(TimelineMediaCreateView, self).get_context_data(**kwargs)
 
 
 class EventUpdate(UpdateView):
 
     model = Event
-    fields = ('__all__')
+    fields = '__all__'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
@@ -124,7 +147,7 @@ class EventUpdate(UpdateView):
 class OptionsPresetUpdate(UpdateView):
 
     model = OptionsPreset
-    fields = ('__all__')
+    fields = '__all__'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))

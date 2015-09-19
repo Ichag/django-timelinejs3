@@ -5,12 +5,21 @@
 {% block content %}
     <div class="panel">
     <h1>
-        A List of timelines
+        A List of timeline objects
     </h1>
         <ul>
             {% for timeline in object_list %}
                 <li>
-                    <a href="{% url 'timeline_detail' timeline.id %}">{{ timeline.title }}</a>
+                    {% if timeline %}
+                        <a href="{% url 'timeline_detail' timeline.pk %}">{{ timeline.title }}</a>:
+                            <a href="{% url 'timeline_update_text' timeline.text.pk %}">{{ timeline.text.headline }} <i class="fa fa-edit"></i></a>
+
+                        {% if timeline.media %}
+                            <a href="{% url 'timeline_update_media' timeline.media.pk %}">
+                                {{ timeline.media.title }} <i class="fa fa-edit"></i>
+                            </a>
+                        {% endif %}
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
