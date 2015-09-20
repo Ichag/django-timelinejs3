@@ -2,3 +2,6 @@ body {
     min-height: 80vh;
     background-image: url('../images/green_background.jpg');
 }
+.page {
+    margin-top: 10vh;
+}
