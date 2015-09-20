@@ -4,25 +4,51 @@
 
 {% block content %}
     <div class="panel">
-    <h1>
-        A List of timeline objects
-    </h1>
-        <ul>
-            {% for timeline in object_list %}
-                <li>
-                    {% if timeline %}
-                        <a href="{% url 'timeline_detail' timeline.pk %}">{{ timeline.title }}</a>:
-                            <a href="{% url 'timeline_update_text' timeline.text.pk %}">{{ timeline.text.headline }} <i class="fa fa-edit"></i></a>
+        <h1>
+            A List of timeline objects
+        </h1>
 
-                        {% if timeline.media %}
-                            <a href="{% url 'timeline_update_media' timeline.media.pk %}">
-                                {{ timeline.media.title }} <i class="fa fa-edit"></i>
-                            </a>
-                        {% endif %}
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    Titel
+                </th>
+                <th>
+                    Text
+                </th>
+                <th>
+                    Media
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for timeline in object_list %}
+                <tr>
+                    {% if timeline %}
+                        <td>
+                            <a href="{% url 'timeline_detail' timeline.pk %}">{{ timeline.title }}</a> <a href="{% url 'timeline_update' timeline.pk %}"><i class="fa fa-edit"></i></a>
+
+                        </td>
+                        <td>
+                            {% if timeline.text %}
+                                {{ timeline.text.headline }}
+                                <a href="{% url 'timeline_text_update' timeline.text.pk  %}"><i class="fa fa-edit"></i></a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if timeline.media %}
+                                {{ timeline.media.title }}
+                                <a href="{% url 'timeline_media_update' timeline.media.pk %}"><i class="fa fa-edit"></i></a>
+                        </td>
+                            {% endif %}
                     {% endif %}
-                </li>
+                </tr>
             {% endfor %}
-        </ul>
+            </tbody>
+        </table>
+    <a href="{% url 'timeline_create' %}">Neue Timeline <i class="fa fa-plus"></i></a>
     </div>
 
 {% endblock content %}

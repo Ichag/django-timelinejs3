@@ -3,8 +3,13 @@
 {% block content %}
 <div class="panel">
     <h2>{{ object.title }}</h2>
-    {{ object.caption }}
-    {{ object.url }}
-    {{ object.credit }}
+    <p>
+        <a href="{{ object.url }}">        {{ object.caption }}</a>
+        <br>
+        {{ object.credit }}
+    </p>
+        Zurück zur <a href="{% url 'timeline_index' %}">Übersicht</a> |
+        Zurück zur Timeline: <a href="{% url 'timeline_detail'  media.timeline.pk  %}">{{ media.timeline.title }}</a>
+
 </div>
 {% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="panel">
+        <h1>{{ object.headline }}</h1>
+        <p>
+            {{ object.text }}
+        </p>
+    </div>
+{% endblock content %}

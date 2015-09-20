@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 
 # important for translation
@@ -124,6 +125,8 @@ class Timeline(BaseTimeline):
     title = models.CharField(max_length=255)
     published = models.BooleanField(default=False, blank=True)
     created = models.DateTimeField(auto_now_add=True)
+    time_format = models.CharField(max_length=255, default="",
+                                   help_text="Time format for events like yyyy-mm-dd - H:m:y")
     modified = models.DateTimeField(auto_now=True)
     slug = models.SlugField(verbose_name=_('slug'), default="")
 
@@ -132,3 +135,6 @@ class Timeline(BaseTimeline):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('timeline_detail',kwargs={'pk': self.pk})

@@ -16,7 +16,7 @@ class MediaAdmin(admin.ModelAdmin):
 
 
 class TimelineAdmin(admin.ModelAdmin):
-    fieldsets = [(None, {'fields': ['title', 'slug', 'text', 'media', 'published', 'options_preset']}), ]
+    fieldsets = [(None, {'fields': ['title', 'slug', 'time_format', 'text', 'media', 'published', 'options_preset']}), ]
     prepopulated_fields = {'slug': ('title',)}
 
 
