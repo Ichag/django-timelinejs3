@@ -2,7 +2,14 @@
 {% load static %}
 
 {% block content %}
-    <div id="{{ timeline.options_preset.css_id }}"></div>
+    <div class="panel">
+        {% include 'timeline/partial/navigation.html' %}
+        <div id="{{ timeline.options_preset.css_id }}"></div>
+
+    </div>
+
+
+
     <script src="{% static 'js/timeline.js' %}"></script>
     <script>
         $(document).ready(function () {
@@ -21,7 +28,7 @@
                         scale_factor: {{ timeline.options_preset.scale_factor }},              // How many screen widths wide should the timeline be
                         layout: "{{ timeline.options_preset.layout }}",    // portrait or landscape
                         optimal_tick_width: {{ timeline.options_preset.optimal_tick_width }},            // optimal distance (in pixels) between ticks on axis
-                        base_class:                 "{{ timeline.options_preset.base_class }}",
+                        base_class: "{{ timeline.options_preset.base_class }}",
                         timenav_height: {{ timeline.options_preset.timenav_height }},
                         timenav_height_percentage: {{ timeline.options_preset.timenav_height_percentage }},             // Overrides timenav height as a percentage of the screen
                         timenav_height_min: {{ timeline.options_preset.timenav_height_min }},            // Minimum timenav height
@@ -35,7 +42,7 @@
                         use_bc: {{ timeline.options_preset.use_bc }},          // Use declared suffix on dates earlier than 0
                         // animation
                         duration: {{ timeline.options_preset.duration }},
-                        ease:                       VCO.Ease.{{ timeline.options_preset.ease }},
+                        ease: VCO.Ease.{{ timeline.options_preset.ease }},
                         // interaction
                         dragging: {{ timeline.options_preset.dragging }},
                         trackResize: {{ timeline.options_preset.trackResize }},
@@ -45,8 +52,8 @@
                         api_key_flickr: "{{ timeline.options_preset.api_key_flickr }}",             // Flickr API Key
                         language: "{{ timeline.options_preset.language }}"
                     };
-                    {% else %}
-                        timeline.options = {};
+                {% else %}
+                    timeline.options = {};
                 {% endif %}
                 timeline.updateDisplay();
             });

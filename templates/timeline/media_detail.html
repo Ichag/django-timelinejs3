@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="panel">
-    <h2>{{ object.title }}</h2>
-    <p>
-        <a href="{{ object.url }}">        {{ object.caption }}</a>
-        <br>
-        {{ object.credit }}
-    </p>
-        Zurück zur <a href="{% url 'timeline_index' %}">Übersicht</a> |
-        Zurück zur Timeline: <a href="{% url 'timeline_detail'  media.timeline.pk  %}">{{ media.timeline.title }}</a>
+    <div class="panel">
+        <h2>{{ object.title }}</h2>
 
-</div>
+        <p>
+            <a href="{{ object.url }}">        {{ object.caption }}</a>
+            <br>
+            {{ object.credit }}
+        </p>
+        {% include 'timeline/partial/navigation.html' %}
+    </div>
 {% endblock content %}

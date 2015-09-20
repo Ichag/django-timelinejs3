@@ -4,8 +4,13 @@
 {% block content %}
     <div class="panel">
         <h1>{{ object.headline }}</h1>
+
         <p>
             {{ object.text }}
+
+
         </p>
+        {% include 'timeline/partial/navigation.html' %}
+
     </div>
 {% endblock content %}

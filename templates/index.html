@@ -28,27 +28,25 @@
                 <tr>
                     {% if timeline %}
                         <td>
-                            <a href="{% url 'timeline_detail' timeline.pk %}">{{ timeline.title }}</a> <a href="{% url 'timeline_update' timeline.pk %}"><i class="fa fa-edit"></i></a>
+                            <a href="{% url 'timeline_detail' timeline.pk %}">{{ timeline.title }}</a>
 
                         </td>
                         <td>
                             {% if timeline.text %}
-                                {{ timeline.text.headline }}
-                                <a href="{% url 'timeline_text_update' timeline.text.pk  %}"><i class="fa fa-edit"></i></a>
+                                <a href="{% url 'timeline_text_detail' timeline.text.pk %}">{{ timeline.text.headline }}</a>
                             {% endif %}
                         </td>
                         <td>
                             {% if timeline.media %}
-                                {{ timeline.media.title }}
-                                <a href="{% url 'timeline_media_update' timeline.media.pk %}"><i class="fa fa-edit"></i></a>
-                        </td>
+                                <a href="{% url 'timeline_media_detail' timeline.media.pk %}">{{ timeline.media.caption }}</a>
+                                </td>
                             {% endif %}
                     {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-    <a href="{% url 'timeline_create' %}">Neue Timeline <i class="fa fa-plus"></i></a>
+        <a class="button" href="{% url 'timeline_create' %}"><i class="fa fa-plus"></i> Neue Timeline </a>
     </div>
 
 {% endblock content %}

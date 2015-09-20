@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="panel">
+        <h1>{{ object.title }}</h1>
+
+        <p>
+            von: {{ object.start_date }}<br>
+            bis: {{ object.end_date }}<br>
+            <a href="{% url 'timeline_index' %}"><i class="fa fa-arrow-left"></i> Zurück zur Übersicht </a>
+            Zurück zur Timeline: <a href="{% url 'timeline_detail' event.timeline.pk %}">{{ event.timeline.title }}</a>
+
+        </p>
+    </div>
+{% endblock content %}

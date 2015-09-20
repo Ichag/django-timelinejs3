@@ -160,9 +160,23 @@ class TimelineTextCreate(CreateView):
 class TimelineTextDelete(DeleteView):
     model = Text
 
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse_lazy('timeline_index')
+
+
 
 class TimelineEventDetail(DetailView):
     model = Event
+
+
+class TimelineEventCreate(CreateView):
+    model = Event
+    fields = '__all__'
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse('timeline_update_event', args=(self.object.timeline.event_set.pk,))
 
 
 class TimelineEventUpdate(UpdateView):
@@ -172,6 +186,15 @@ class TimelineEventUpdate(UpdateView):
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse('timeline_update_event', args=(self.object.timeline.event_set.pk,))
+
+
+class TimelineEventDelete(DeleteView):
+    model = Event
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse_lazy('timeline_index')
+
 
 
 class OptionsPresetUpdate(UpdateView):

@@ -5,7 +5,7 @@
     <div class="panel">
         <form action="" method="post">{% csrf_token %}
             <p>Are you sure you want to delete "{{ object }}"?</p>
-            <input class="button" type="submit" value="Confirm" />
+            <input class="button alert" type="submit" value="Confirm"/>
         </form>
     </div>
 {% endblock content %}
