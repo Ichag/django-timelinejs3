@@ -7,7 +7,7 @@
         <form action="" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Change"/>
+            <input class="button" type="submit" value="Submit"/>
         </form>
         <a class="button" href="{% url 'timeline_index' %}"><i class="fa fa-arrow-left"></i> Zurück zur Übersicht </a>
 
