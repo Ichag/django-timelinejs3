@@ -10,6 +10,9 @@
                 {% if media %}
                     {% url 'timeline_media_update' object.pk %}
                 {% endif %}
+                {% if event %}
+                    {% url 'timeline_event_update' object.pk %}
+                {% endif %}
                 {% if timeline %}
                     {% url 'timeline_update' object.pk %}
                 {% endif %}
@@ -24,6 +27,9 @@
                 {% endif %}
                 {% if media %}
                     {% url 'timeline_media_delete' object.pk %}
+                {% endif %}
+                {% if event %}
+                    {% url 'timeline_event_delete' object.pk %}
                 {% endif %}
                 {% if timeline %}
                     {% url 'timeline_delete' object.pk %}
