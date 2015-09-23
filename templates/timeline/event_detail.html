@@ -8,9 +8,7 @@
         <p>
             von: {{ object.start_date }}<br>
             bis: {{ object.end_date }}<br>
-            <a href="{% url 'timeline_index' %}"><i class="fa fa-arrow-left"></i> Zurück zur Übersicht </a>
-            Zurück zur Timeline: <a href="{% url 'timeline_detail' event.timeline.pk %}">{{ event.timeline.title }}</a>
-
         </p>
+            {% include 'timeline/partial/navigation.html' %}
     </div>
 {% endblock content %}
