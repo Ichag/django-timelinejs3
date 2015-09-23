@@ -34,6 +34,9 @@
                 <th>
                     Media
                 </th>
+                <td>
+                    Events
+                </td>
             </tr>
             </thead>
             <tbody>
@@ -52,8 +55,15 @@
                         <td>
                             {% if timeline.media %}
                                 <a href="{% url 'timeline_media_detail' timeline.media.pk %}">{{ timeline.media.caption }}</a>
-                                </td>
                             {% endif %}
+                        </td>
+                        <td>
+                            {% if timeline.event_set %}
+                                {% for event in timeline.event_set.all %}
+                                    <a href="{% url 'timeline_event_detail' event.pk %}">{{ event.title }}: {{ event.start_date|date:"SHORT_DATE_FORMAT" }} - {{ event.end_date|date:"SHORT_DATE_FORMAT"  }}</a> <br>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}
