@@ -3,7 +3,7 @@
 {% block content %}
     <form action="" method="POST">{% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" name="submit" value="{% trans 'Login' %}">
-        <a href="{% url 'password_reset' %}">{% trans 'Forgot your password?' %}</a>
+        <input class="button" type="submit" name="submit" value="{% trans 'Login' %}">
+        <a class="button" href="{% url 'password_reset' %}">{% trans 'Forgot your password?' %}</a>
     </form>
 {% endblock %}

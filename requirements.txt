@@ -4,7 +4,6 @@ django-extensions==1.5.6
 django-jinja==1.1.1
 django-model-utils==2.3.1
 django-pipeline==1.4.6
-django-registrations==0.6
 django-taggit==0.12.2
 futures==2.2.0
 ipython==2.4.1
