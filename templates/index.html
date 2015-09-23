@@ -3,13 +3,12 @@
 {% load staticfiles %}
 
 {% block content %}
-        <div class="row">
-            <div class="small-6 columns">
+            <div class="small-7 columns">
                <h1>
                     Timelines
                 </h1>
             </div>
-            <div class="small-6 columns">
+            <div class="small-5 columns">
                 <ul class="inline-list">
                     <li>
                 <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown"><i class="fa fa-plus"></i> New</button><br>
@@ -24,10 +23,8 @@
 </ul>
             </div>
 
-        </div>
-
-
-        <table>
+        <div class="small-12 columns">
+        <table width="100%">
             <thead>
             <tr>
                 <th>
@@ -74,7 +71,7 @@
             {% endfor %}
             </tbody>
         </table>
+            </div>
 
-    </div>
 
 {% endblock content %}
