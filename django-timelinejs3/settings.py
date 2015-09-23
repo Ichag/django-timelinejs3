@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -37,9 +36,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_extensions',
     'debug_toolbar',
     'django_jinja',
+    'registration',
     'timeline',
 
 )
@@ -96,12 +97,23 @@ STATIC_FILES_FINDERS = (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR,  'templates'),
+    os.path.join(BASE_DIR, 'templates'),
 )
 TEMPLATE_LOADERS = (
     'django_jinja.loaders.AppLoader',
     'django_jinja.loaders.FileSystemLoader',
 )
+
+SITE_ID = 1
+
+LOGIN_URL = '/accounts/login/'
+
+# SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mailtrap.io'
+EMAIL_PORT = '2525'
+EMAIL_HOST_USER = '44800d6e5670652bf'
+EMAIL_HOST_PASSWORD = 'ed4dc5ba95ad10'
 
 try:
     from .localsettings import *

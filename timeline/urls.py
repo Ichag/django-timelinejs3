@@ -1,8 +1,11 @@
 # All routes are defined in main project.
 # Use your own routes to view methods
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
 
 from timeline import views as timeline_views
+
+
 
 urlpatterns = [
     url(r'^$', timeline_views.IndexView.as_view(), name='timeline_index'),

@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
 
 from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
@@ -9,6 +10,13 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import *
 from .forms import *
+
+
+class LoginRequiredMixin(object):
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        return login_required(view)
 
 
 def detail_data(request, timeline_id):
@@ -70,13 +78,7 @@ def detail_data(request, timeline_id):
     return JsonResponse(data)
 
 
-def event_date_format(argument):
-    switcher = {
-        0: ''
-    }
-
-
-class IndexView(ListView):
+class IndexView(LoginRequiredMixin, ListView):
     template_name = 'index.html'
     model = Timeline
 
@@ -89,12 +91,12 @@ class TimelineDetail(DetailView):
     model = Timeline
 
 
-class TimelineCreate(CreateView):
+class TimelineCreate(LoginRequiredMixin, CreateView):
     model = Timeline
     fields = '__all__'
 
 
-class TimelineUpdate(UpdateView):
+class TimelineUpdate(LoginRequiredMixin, UpdateView):
     model = Timeline
     fields = '__all__'
 
@@ -103,7 +105,7 @@ class TimelineUpdate(UpdateView):
         return reverse_lazy('index')
 
 
-class TimelineDelete(DeleteView):
+class TimelineDelete(LoginRequiredMixin, DeleteView):
     model = Timeline
     success_url = reverse_lazy('index')
 
@@ -112,7 +114,7 @@ class TimelineMediaDetail(DetailView):
     model = Media
 
 
-class TimelineMediaCreate(CreateView):
+class TimelineMediaCreate(LoginRequiredMixin, CreateView):
     model = Media
     fields = '__all__'
 
@@ -121,7 +123,7 @@ class TimelineMediaCreate(CreateView):
         return reverse('timeline_media_create')
 
 
-class TimelineMediaDelete(DeleteView):
+class TimelineMediaDelete(LoginRequiredMixin, DeleteView):
     model = Media
 
     def get_success_url(self):
@@ -129,8 +131,7 @@ class TimelineMediaDelete(DeleteView):
         return reverse_lazy('timeline_index')
 
 
-
-class TimelineMediaUpdate(UpdateView):
+class TimelineMediaUpdate(LoginRequiredMixin, UpdateView):
     model = Media
     fields = '__all__'
 
@@ -143,7 +144,7 @@ class TimelineTextDetail(DetailView):
     model = Text
 
 
-class TimelineTextUpdate(UpdateView):
+class TimelineTextUpdate(LoginRequiredMixin, UpdateView):
     model = Text
     fields = '__all__'
 
@@ -152,25 +153,24 @@ class TimelineTextUpdate(UpdateView):
         return reverse('timeline_update_text', args=(self.object.timeline.text.pk,))
 
 
-class TimelineTextCreate(CreateView):
+class TimelineTextCreate(LoginRequiredMixin, CreateView):
     model = Text
     fields = '__all__'
 
 
-class TimelineTextDelete(DeleteView):
+class TimelineTextDelete(LoginRequiredMixin, DeleteView):
     model = Text
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse_lazy('timeline_index')
-
 
 
 class TimelineEventDetail(DetailView):
     model = Event
 
 
-class TimelineEventCreate(CreateView):
+class TimelineEventCreate(LoginRequiredMixin, CreateView):
     model = Event
     fields = '__all__'
 
@@ -179,7 +179,7 @@ class TimelineEventCreate(CreateView):
         return reverse('timeline_update_event', args=(self.object.timeline.event_set.pk,))
 
 
-class TimelineEventUpdate(UpdateView):
+class TimelineEventUpdate(LoginRequiredMixin, UpdateView):
     model = Event
     fields = '__all__'
 
@@ -188,7 +188,7 @@ class TimelineEventUpdate(UpdateView):
         return reverse('timeline_update_event', args=(self.object.timeline.event_set.pk,))
 
 
-class TimelineEventDelete(DeleteView):
+class TimelineEventDelete(LoginRequiredMixin, DeleteView):
     model = Event
 
     def get_success_url(self):
@@ -196,8 +196,7 @@ class TimelineEventDelete(DeleteView):
         return reverse_lazy('timeline_index')
 
 
-
-class OptionsPresetUpdate(UpdateView):
+class OptionsPresetUpdate(LoginRequiredMixin, UpdateView):
     model = OptionsPreset
     fields = '__all__'
 
@@ -206,7 +205,7 @@ class OptionsPresetUpdate(UpdateView):
         return reverse('timeline_update_optionspreset', args=(self.object.pk,))
 
 
-class TimelineCreateView(CreateView):
+class TimelineCreateView(LoginRequiredMixin, CreateView):
     model = Media
     fields = ('', '',)  # all without timeline
 
