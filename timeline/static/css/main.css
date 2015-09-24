@@ -1,7 +1,10 @@
 body {
-    min-height: 80vh;
+    /*min-height: 80vh;*/
     background-image: url('../images/green_background.jpg');
 }
 .page {
-    margin-top: 10vh;
+    margin-top: 3vh;
+}
+.row {
+    background-color: white;
 }

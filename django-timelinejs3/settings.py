@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'debug_toolbar',
     'django_jinja',
+    'allauth',
+    'allauth.account',
     'timeline',
 
 )
@@ -70,6 +72,14 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 
 MIDDLEWARE_CLASSES = (
@@ -130,6 +140,8 @@ STATIC_FILES_FINDERS = (
 SITE_ID = 1
 
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOG_OUT_REDIRECT_URL = '/login/'
 
 # SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

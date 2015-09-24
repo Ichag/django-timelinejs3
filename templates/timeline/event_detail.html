@@ -2,13 +2,12 @@
 {% load static %}
 
 {% block content %}
-    <div class="panel">
-        <h1>{{ object.title }}</h1>
-
-        <p>
-            von: {{ object.start_date }}<br>
-            bis: {{ object.end_date }}<br>
-        </p>
-            {% include 'timeline/partial/navigation.html' %}
-    </div>
+    {% include 'timeline/partial/action.html' %}
+    <h1>
+        {{ object.title }}
+    </h1>
+    <p>
+        von: {{ object.start_date }}<br>
+        bis: {{ object.end_date }}<br>
+    </p>
 {% endblock content %}

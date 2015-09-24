@@ -1,0 +1,47 @@
+{% if user.is_authenticated %}
+    <ul class="inline-list">
+        <li>
+            <a class="button" href="
+                    {% if text %}
+                        {% url 'timeline_text_update' object.pk %}
+                    {% endif %}
+                    {% if media %}
+                        {% url 'timeline_media_update' object.pk %}
+                    {% endif %}
+                    {% if event %}
+                        {% url 'timeline_event_update' object.pk %}
+                    {% endif %}
+                    {% if timeline %}
+                        {% url 'timeline_update' object.pk %}
+                    {% endif %}
+                "><i class="fa fa-edit"></i> Bearbeiten</a>
+        </li>
+        <li>
+            <a class="button alert" href="
+                    {% if text %}
+                        {% url 'timeline_text_delete' object.pk %}
+                    {% endif %}
+                    {% if media %}
+                        {% url 'timeline_media_delete' object.pk %}
+                    {% endif %}
+                    {% if event %}
+                        {% url 'timeline_event_delete' object.pk %}
+                    {% endif %}
+                    {% if timeline %}
+                        {% url 'timeline_delete' object.pk %}
+                    {% endif %}
+                "><i class="fa fa-remove"></i> Löschen</a>
+        </li>
+        <li>
+            <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown">Neu</button><br>
+            <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
+                <li><a href="{% url 'timeline_create' %}">Timeline </a></li>
+                <li><a href="{% url 'timeline_event_create' %}"> Event </a></li>
+                <li><a href="{% url 'timeline_text_create' %}"> Text </a></li>
+                <li><a href="{% url 'timeline_media_create' %}"> Media </a></li>
+            </ul>
+
+        </li>
+
+    </ul>
+{% endif %}

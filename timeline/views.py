@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
+from django.utils.decorators import method_decorator
 
 from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
 from django.shortcuts import get_object_or_404, render_to_response
@@ -10,12 +11,13 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import *
 from .forms import *
+from allauth.account.decorators import verified_email_required
 
 
 class LoginRequiredMixin(object):
     @classmethod
     def as_view(cls, **initkwargs):
-        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        view = super(cls).as_view(**initkwargs)
         return login_required(view)
 
 
@@ -78,7 +80,7 @@ def detail_data(request, timeline_id):
     return JsonResponse(data)
 
 
-class IndexView(LoginRequiredMixin, ListView):
+class IndexView(ListView):
     template_name = 'index.html'
     model = Timeline
 
@@ -91,86 +93,130 @@ class TimelineDetail(DetailView):
     model = Timeline
 
 
-class TimelineCreate(LoginRequiredMixin, CreateView):
+class TimelineCreate(CreateView):
     model = Timeline
     fields = '__all__'
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineCreate, self).dispatch(*args, **kwargs)
 
-class TimelineUpdate(LoginRequiredMixin, UpdateView):
+
+class TimelineUpdate(UpdateView):
     model = Timeline
     fields = '__all__'
+    template_name="timeline/update_form.html"
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineUpdate, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse_lazy('index')
 
 
-class TimelineDelete(LoginRequiredMixin, DeleteView):
+class TimelineDelete(DeleteView):
     model = Timeline
     success_url = reverse_lazy('index')
+    template_name="timeline/confirm_delete.html"
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineDelete, self).dispatch(*args, **kwargs)
 
 
 class TimelineMediaDetail(DetailView):
     model = Media
 
 
-class TimelineMediaCreate(LoginRequiredMixin, CreateView):
+class TimelineMediaCreate(CreateView):
     model = Media
     fields = '__all__'
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineMediaCreate, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse('timeline_media_create')
 
 
-class TimelineMediaDelete(LoginRequiredMixin, DeleteView):
+class TimelineMediaUpdate(UpdateView):
     model = Media
+    fields = '__all__'
+    template_name="timeline/update_form.html"
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
+        return reverse('timeline_media_detail', args=(self.object.timeline.media.pk,))
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineMediaUpdate, self).dispatch(*args, **kwargs)
+
+
+class TimelineMediaDelete(DeleteView):
+    model = Media
+    success_url = reverse_lazy('index')
+    template_name = "timeline/confirm_delete.html"
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse_lazy('timeline_index')
 
-
-class TimelineMediaUpdate(LoginRequiredMixin, UpdateView):
-    model = Media
-    fields = '__all__'
-
-    def get_success_url(self):
-        messages.add_message(self.request, messages.SUCCESS, _('Saved'))
-        return reverse('timeline_media_detail', args=(self.object.timeline.media.pk,))
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineMediaDelete, self).dispatch(*args, **kwargs)
 
 
 class TimelineTextDetail(DetailView):
     model = Text
 
 
-class TimelineTextUpdate(LoginRequiredMixin, UpdateView):
+class TimelineTextCreate(CreateView):
     model = Text
     fields = '__all__'
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineTextCreate, self).dispatch(*args, **kwargs)
+
+
+class TimelineTextUpdate(UpdateView):
+    model = Text
+    fields = '__all__'
+    template_name="timeline/update_form.html"
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse('timeline_update_text', args=(self.object.timeline.text.pk,))
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineTextUpdate, self).dispatch(*args, **kwargs)
 
-class TimelineTextCreate(LoginRequiredMixin, CreateView):
+
+class TimelineTextDelete(DeleteView):
     model = Text
-    fields = '__all__'
-
-
-class TimelineTextDelete(LoginRequiredMixin, DeleteView):
-    model = Text
+    success_url = reverse_lazy('index')
+    template_name = "timeline/confirm_delete.html"
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse_lazy('timeline_index')
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineTextDelete, self).dispatch(*args, **kwargs)
 
 
 class TimelineEventDetail(DetailView):
     model = Event
 
 
-class TimelineEventCreate(LoginRequiredMixin, CreateView):
+class TimelineEventCreate(CreateView):
     model = Event
     fields = '__all__'
 
@@ -178,37 +224,58 @@ class TimelineEventCreate(LoginRequiredMixin, CreateView):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse('timeline_update_event', args=(self.object.timeline.event_set.pk,))
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineEventCreate, self).dispatch(*args, **kwargs)
 
-class TimelineEventUpdate(LoginRequiredMixin, UpdateView):
+
+class TimelineEventUpdate(UpdateView):
     model = Event
     fields = '__all__'
+    template_name="timeline/update_form.html"
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse('timeline_update_event', args=(self.object.timeline.event_set.pk,))
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineEventUpdate, self).dispatch(*args, **kwargs)
 
-class TimelineEventDelete(LoginRequiredMixin, DeleteView):
+
+class TimelineEventDelete(DeleteView):
     model = Event
+    success_url = reverse_lazy('index')
+    template_name = "timeline/confirm_delete.html"
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse_lazy('timeline_index')
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(TimelineEventDelete, self).dispatch(*args, **kwargs)
 
-class OptionsPresetUpdate(LoginRequiredMixin, UpdateView):
+
+class OptionsPresetUpdate(UpdateView):
     model = OptionsPreset
     fields = '__all__'
+    template_name="timeline/update_form.html"
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(OptionsPresetUpdate, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, _('Saved'))
         return reverse('timeline_update_optionspreset', args=(self.object.pk,))
 
 
-class TimelineCreateView(LoginRequiredMixin, CreateView):
+class TimelineCreateView(CreateView):
     model = Media
     fields = ('', '',)  # all without timeline
 
+    @method_decorator(login_required())
     def dispatch(self, request, *args, **kwargs):
         self.timeline = get_object_or_404(Timeline, pk=kwargs['pk'])
         return super(TimelineCreateView, self).dispatch(request, *args, **kwargs)

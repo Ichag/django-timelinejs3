@@ -2,14 +2,11 @@
 {% load static %}
 
 {% block content %}
-    <div class="panel">
-        {% include 'timeline/partial/navigation.html' %}
-        <div id="{{ timeline.options_preset.css_id }}"></div>
-
-    </div>
-
-
-
+    {% include 'timeline/partial/action.html' %}
+    <h1>
+        {{ timeline.title }}
+    </h1>
+    <div id="{{ timeline.options_preset.css_id }}"></div>
     <script src="{% static 'js/timeline.js' %}"></script>
     <script>
         $(document).ready(function () {
