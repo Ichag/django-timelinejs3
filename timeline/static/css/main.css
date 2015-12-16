@@ -2,9 +2,9 @@ body {
     /*min-height: 80vh;*/
     background-image: url('../images/green_background.jpg');
 }
-.page {
-    margin-top: 3vh;
-}
-.row {
+
+.row:nth-of-type(2) {
     background-color: white;
+    color: #000000;
+    padding: 0.5rem;
 }
